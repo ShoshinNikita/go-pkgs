@@ -49,9 +49,9 @@ func (l *logger) GetStdLogger() *log.Logger {
 // Print[f|ln] functions
 
 func (l *logger) Print(v ...interface{}) {
-	if len(v) > 0 {
+	if l.debug && len(v) > 0 {
 		if str, ok := v[0].(string); ok {
-			if !l.debug && strings.HasPrefix(str, DebugPrefix) {
+			if strings.HasPrefix(str, DebugPrefix) {
 				return
 			}
 		}
@@ -69,9 +69,9 @@ func (l *logger) Printf(format string, v ...interface{}) {
 }
 
 func (l *logger) Println(v ...interface{}) {
-	if len(v) > 0 {
+	if !l.debug && len(v) > 0 {
 		if str, ok := v[0].(string); ok {
-			if !l.debug && strings.HasPrefix(str, DebugPrefix) {
+			if strings.HasPrefix(str, DebugPrefix) {
 				return
 			}
 		}
